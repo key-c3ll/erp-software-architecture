@@ -1,215 +1,114 @@
+# Proyecto ERP – Arquitectura de Software
+
+Este repositorio contiene la documentación de arquitectura del sistema ERP desarrollada como parte del taller de Arquitectura de Software.
+
+La documentación sigue la plantilla **arc42** y describe la arquitectura del sistema ERP, con énfasis en el **Módulo de Compras**.
+
+## Contenido
+- Introducción y objetivos del sistema
+- Restricciones de arquitectura
+- Contexto del sistema
+- Vista de bloques de construcción
+- Vista de ejecución
+- Vista de despliegue
+- Glosario del dominio
+
+Toda la documentación se encuentra en formato Markdown dentro de la carpeta `arc42`.
+
 ---
 date: July 2025
-title: "![arc42](images/arc42-logo.png) Template"
+title: Introduction and Goals
 ---
 
-# 
+# Introduction and Goals
 
-**About arc42**
+## Requirements Overview
+El sistema ERP tiene como objetivo principal integrar y optimizar los procesos de negocio de una organización, centralizando la información y reduciendo errores operativos.
 
-arc42, the template for documentation of software and system
-architecture.
+En este proyecto se aborda principalmente el **Módulo de Compras**, el cual permite gestionar proveedores, productos y órdenes de compra.
 
-Template Version 9.0-EN. (based upon AsciiDoc version), July 2025
+## Quality Goals
+Los objetivos de calidad del sistema son:
+- Usabilidad: interfaz intuitiva y fácil de usar.
+- Mantenibilidad: código modular y bien estructurado.
+- Confiabilidad: manejo adecuado de errores y validaciones.
+- Rendimiento: tiempos de respuesta aceptables para operaciones comunes.
 
-Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
-contributors. See <https://arc42.org>.
+## Stakeholders
 
-# Introduction and Goals {#section-introduction-and-goals}
+| Rol              | Contacto              | Expectativas |
+|------------------|-----------------------|--------------|
+| Administrador    | admin@empresa.com     | Gestión completa del sistema |
+| Encargado Compras| compras@empresa.com   | Registrar y consultar órdenes |
+| Docente          | docente@universidad.edu | Evaluación del diseño |
+| Equipo Desarrollo| dev@grupoX.com        | Arquitectura clara y documentada |
 
-## Requirements Overview {#_requirements_overview}
 
-## Quality Goals {#_quality_goals}
+# System Scope and Context
 
-## Stakeholders {#_stakeholders}
+## Business Context
+El sistema ERP es utilizado por distintos usuarios internos de la empresa para gestionar sus operaciones diarias.
 
-+-------------+---------------------------+---------------------------+
-| Role/Name   | Contact                   | Expectations              |
-+=============+===========================+===========================+
-| *           | *\<Contact-1\>*           | *\<Expectation-1\>*       |
-| \<Role-1\>* |                           |                           |
-+-------------+---------------------------+---------------------------+
-| *           | *\<Contact-2\>*           | *\<Expectation-2\>*       |
-| \<Role-2\>* |                           |                           |
-+-------------+---------------------------+---------------------------+
+Los usuarios interactúan con el sistema para:
+- Registrar proveedores y productos
+- Generar órdenes de compra
+- Consultar información operativa
 
-# Architecture Constraints {#section-architecture-constraints}
+![Diagrama de Contexto](./images/c1_context.png)
 
-# Context and Scope {#section-context-and-scope}
+## Technical Context
+Desde el punto de vista técnico, el sistema ERP se comunica con:
+- Navegadores web utilizados por los usuarios
+- Una base de datos relacional PostgreSQL
+- Sistemas externos opcionales, como un sistema contable
 
-## Business Context {#_business_context}
+Las comunicaciones se realizan mediante protocolos HTTP/HTTPS.
 
-**\<Diagram or Table\>**
+# Building Block View
 
-**\<optionally: Explanation of external domain interfaces\>**
+## Whitebox Overall System
+El sistema ERP se compone de varios contenedores que interactúan entre sí para cumplir con los requisitos del negocio.
 
-## Technical Context {#_technical_context}
+![Diagrama de Contenedores](./images/c2_containers.png)
 
-**\<Diagram or Table\>**
+### Aplicación Web
+Responsable de la interacción con el usuario. Permite registrar y consultar información del sistema ERP mediante formularios y vistas.
 
-**\<optionally: Explanation of technical interfaces\>**
+### Backend ERP
+Contiene la lógica de negocio del sistema. Gestiona los módulos de Compras, Facturación, Stock, Activos Fijos, Empleados y EIS.
 
-**\<Mapping Input/Output to Channels\>**
+### Base de Datos
+Almacena de forma persistente toda la información del sistema, como productos, proveedores y órdenes de compra.
 
-# Solution Strategy {#section-solution-strategy}
+# Runtime View
 
-# Building Block View {#section-building-block-view}
+## Escenario: Registrar un Producto
+Este escenario describe el flujo de ejecución cuando un usuario registra un nuevo producto en el sistema.
 
-## Whitebox Overall System {#_whitebox_overall_system}
+1. El usuario ingresa los datos del producto en la aplicación web.
+2. La aplicación envía la solicitud al backend.
+3. El backend valida la información.
+4. Los datos se almacenan en la base de datos.
+5. El sistema confirma el registro exitoso.
 
-***\<Overview Diagram\>***
+![Diagrama de Secuencia](docimages)
+# Deployment View
 
-Motivation
+## Infraestructura
+El sistema ERP puede desplegarse en un entorno centralizado compuesto por:
 
-:   *\<text explanation\>*
+- Servidor Web para la aplicación frontend
+- Servidor de Aplicaciones Java para el backend
+- Servidor de Base de Datos PostgreSQL
 
-Contained Building Blocks
+Esta configuración es adecuada para un entorno académico y de pruebas.
+ Glossary
 
-:   *\<Description of contained building block (black boxes)\>*
+| Término | Definición |
+|--------|------------|
+| ERP | Sistema de Planificación de Recursos Empresariales |
+| Producto | Artículo que la empresa compra o vende |
+| Proveedor | Entidad que suministra productos |
+| Orden de Compra | Documento que formaliza una compra |
+| Módulo de Compras | Componente del ERP encargado de gestionar compras |
 
-Important Interfaces
-
-:   *\<Description of important interfaces\>*
-
-### \<Name black box 1\> {#_name_black_box_1}
-
-*\<Purpose/Responsibility\>*
-
-*\<Interface(s)\>*
-
-*\<(Optional) Quality/Performance Characteristics\>*
-
-*\<(Optional) Directory/File Location\>*
-
-*\<(Optional) Fulfilled Requirements\>*
-
-*\<(optional) Open Issues/Problems/Risks\>*
-
-### \<Name black box 2\> {#_name_black_box_2}
-
-*\<black box template\>*
-
-### \<Name black box n\> {#_name_black_box_n}
-
-*\<black box template\>*
-
-### \<Name interface 1\> {#_name_interface_1}
-
-...​
-
-### \<Name interface m\> {#_name_interface_m}
-
-## Level 2 {#_level_2}
-
-### White Box *\<building block 1\>* {#_white_box_building_block_1}
-
-*\<white box template\>*
-
-### White Box *\<building block 2\>* {#_white_box_building_block_2}
-
-*\<white box template\>*
-
-...​
-
-### White Box *\<building block m\>* {#_white_box_building_block_m}
-
-*\<white box template\>*
-
-## Level 3 {#_level_3}
-
-### White Box \<\_building block x.1\_\> {#_white_box_building_block_x_1}
-
-*\<white box template\>*
-
-### White Box \<\_building block x.2\_\> {#_white_box_building_block_x_2}
-
-*\<white box template\>*
-
-### White Box \<\_building block y.1\_\> {#_white_box_building_block_y_1}
-
-*\<white box template\>*
-
-# Runtime View {#section-runtime-view}
-
-## \<Runtime Scenario 1\> {#_runtime_scenario_1}
-
--   *\<insert runtime diagram or textual description of the scenario\>*
-
--   *\<insert description of the notable aspects of the interactions
-    between the building block instances depicted in this diagram.\>*
-
-## \<Runtime Scenario 2\> {#_runtime_scenario_2}
-
-## ...​
-
-## \<Runtime Scenario n\> {#_runtime_scenario_n}
-
-# Deployment View {#section-deployment-view}
-
-## Infrastructure Level 1 {#_infrastructure_level_1}
-
-***\<Overview Diagram\>***
-
-Motivation
-
-:   *\<explanation in text form\>*
-
-Quality and/or Performance Features
-
-:   *\<explanation in text form\>*
-
-Mapping of Building Blocks to Infrastructure
-
-:   *\<description of the mapping\>*
-
-## Infrastructure Level 2 {#_infrastructure_level_2}
-
-### *\<Infrastructure Element 1\>* {#_infrastructure_element_1}
-
-*\<diagram + explanation\>*
-
-### *\<Infrastructure Element 2\>* {#_infrastructure_element_2}
-
-*\<diagram + explanation\>*
-
-...​
-
-### *\<Infrastructure Element n\>* {#_infrastructure_element_n}
-
-*\<diagram + explanation\>*
-
-# Cross-cutting Concepts {#section-concepts}
-
-## *\<Concept 1\>* {#_concept_1}
-
-*\<explanation\>*
-
-## *\<Concept 2\>* {#_concept_2}
-
-*\<explanation\>*
-
-...​
-
-## *\<Concept n\>* {#_concept_n}
-
-*\<explanation\>*
-
-# Architecture Decisions {#section-design-decisions}
-
-# Quality Requirements {#section-quality-scenarios}
-
-## Quality Requirements Overview {#_quality_requirements_overview}
-
-## Quality Scenarios {#_quality_scenarios}
-
-# Risks and Technical Debts {#section-technical-risks}
-
-# Glossary {#section-glossary}
-
-+----------------------+-----------------------------------------------+
-| Term                 | Definition                                    |
-+======================+===============================================+
-| *\<Term-1\>*         | *\<definition-1\>*                            |
-+----------------------+-----------------------------------------------+
-| *\<Term-2\>*         | *\<definition-2\>*                            |
-+----------------------+-----------------------------------------------+
