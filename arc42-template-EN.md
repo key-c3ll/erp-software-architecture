@@ -16,7 +16,7 @@ La documentación sigue la plantilla **arc42** y describe la arquitectura del si
 Toda la documentación se encuentra en formato Markdown dentro de la carpeta `arc42`.
 
 ---
-date: July 2025
+date: February 2026
 title: Introduction and Goals
 ---
 
